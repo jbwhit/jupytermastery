@@ -5,4 +5,4 @@ d = { 'settings': { 'branch': 'main',
                 'doc_host': 'https://jbwhit.github.io',
                 'git_url': 'https://github.com/jbwhit/jupytermastery',
                 'lib_path': 'jupytermastery'},
-  'syms': {'jupytermastery.core': {'jupytermastery.core.foo': ('core.html#foo', 'jupytermastery/core.py')}}}
+  'syms': {'jupytermastery.core': {'jupytermastery.core.foo': ('extensions.html#foo', 'jupytermastery/core.py')}}}
