@@ -1,0 +1,82 @@
+[
+  {
+    "objectID": "sql.html",
+    "href": "sql.html",
+    "title": "Polars",
+    "section": "",
+    "text": "from pathlib import Path\nfrom urllib.request import urlretrieve\n\nif not Path(\"penguins.csv\").is_file():\n    urlretrieve(\n        \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv\",\n        \"penguins.csv\",\n    )\nConnecting to 'duckdb://'\nSELECT\n  *\nFROM\n  penguins.csv\nWHERE\n  bill_length_mm &gt; 40\nLIMIT\n  3\n\nRunning query in 'duckdb://'\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\n\n\n\n\nAdelie\nTorgersen\n40.3\n18.0\n195\n3250\nFEMALE\n\n\nAdelie\nTorgersen\n42.0\n20.2\n190\n4250\nNone\n\n\nAdelie\nTorgersen\n41.1\n17.6\n182\n3200\nFEMALE\nSELECT\n  *\nFROM\n  penguins.csv\nWHERE\n  bill_length_mm &gt; 40\nLIMIT\n  3\n\nRunning query in 'duckdb://'\n# df.head()\ndf2 = df.DataFrame()\ndf2.head()\n\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\n\n\n\n\n0\nAdelie\nTorgersen\n40.3\n18.0\n195\n3250\nFEMALE\n\n\n1\nAdelie\nTorgersen\n42.0\n20.2\n190\n4250\nNone\n\n\n2\nAdelie\nTorgersen\n41.1\n17.6\n182\n3200\nFEMALE\n## %%sql --save tracks_with_info\n## SELECT\n##   t.*,\n##   a.title AS album,\n##   ar.Name AS artist\n## FROM\n##   Track t\n##   JOIN Album a USING (AlbumId)\n##   JOIN Artist ar USING (ArtistId)\ndf = %sql SELECT * FROM penguins.csv\ntype(df)\n\nRunning query in 'duckdb://'\n\n\npandas.core.frame.DataFrame\ndf\n\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\n\n\n\n\n0\nAdelie\nTorgersen\n39.1\n18.7\n181.0\n3750.0\nMALE\n\n\n1\nAdelie\nTorgersen\n39.5\n17.4\n186.0\n3800.0\nFEMALE\n\n\n2\nAdelie\nTorgersen\n40.3\n18.0\n195.0\n3250.0\nFEMALE\n\n\n3\nAdelie\nTorgersen\nNaN\nNaN\nNaN\nNaN\nNone\n\n\n4\nAdelie\nTorgersen\n36.7\n19.3\n193.0\n3450.0\nFEMALE\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n339\nGentoo\nBiscoe\nNaN\nNaN\nNaN\nNaN\nNone\n\n\n340\nGentoo\nBiscoe\n46.8\n14.3\n215.0\n4850.0\nFEMALE\n\n\n341\nGentoo\nBiscoe\n50.4\n15.7\n222.0\n5750.0\nMALE\n\n\n342\nGentoo\nBiscoe\n45.2\n14.8\n212.0\n5200.0\nFEMALE\n\n\n343\nGentoo\nBiscoe\n49.9\n16.1\n213.0\n5400.0\nMALE\n\n\n\n\n344 rows × 7 columns\nSELECT\n  *\nFROM\n  penguins.csv\nWHERE\n  bill_length_mm &gt; 40\nLIMIT\n  3\n\nRunning query in 'duckdb://'\ndf2.head()\n\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\n\n\n\n\n0\nAdelie\nTorgersen\n40.3\n18.0\n195\n3250\nFEMALE\n\n\n1\nAdelie\nTorgersen\n42.0\n20.2\n190\n4250\nNone\n\n\n2\nAdelie\nTorgersen\n41.1\n17.6\n182\n3200\nFEMALE\n# %config SqlMagic.autopolars = True\n# df = %sql SELECT * FROM writer\n# type(df)",
+    "crumbs": [
+      "Polars"
+    ]
+  },
+  {
+    "objectID": "sql.html#interactive",
+    "href": "sql.html#interactive",
+    "title": "Polars",
+    "section": "Interactive",
+    "text": "Interactive\n\nimport ipywidgets as widgets\n\nfrom pathlib import Path\nfrom urllib.request import urlretrieve\n\nif not Path(\"penguins.csv\").is_file():\n    urlretrieve(\n        \"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv\",\n        \"penguins.csv\",\n    )\n\nThe sql extension is already loaded. To reload it, use:\n  %reload_ext sql\n\n\n\nbody_mass_lower_bound = 3600\nshow_limit = (0, 50, 1)\nsex_selection = widgets.RadioButtons(\n    options=[\"MALE\", \"FEMALE\"], description=\"Sex\", disabled=False\n)\nspecies_selections = widgets.SelectMultiple(\n    options=[\"Adelie\", \"Chinstrap\", \"Gentoo\"],\n    value=[\"Adelie\", \"Chinstrap\"],\n    # rows=10,\n    description=\"Species\",\n    disabled=False,\n)",
+    "crumbs": [
+      "Polars"
+    ]
+  },
+  {
+    "objectID": "sql.html#format-sql-button",
+    "href": "sql.html#format-sql-button",
+    "title": "Polars",
+    "section": "Format SQL Button",
+    "text": "Format SQL Button\nParameterize: {{variable}}",
+    "crumbs": [
+      "Polars"
+    ]
+  },
+  {
+    "objectID": "sql.html#interactive-1",
+    "href": "sql.html#interactive-1",
+    "title": "Polars",
+    "section": "Interactive",
+    "text": "Interactive\n\nSELECT * FROM penguins.csv \nWHERE species IN{{species_selections}} AND \nbody_mass_g &gt; {{body_mass_lower_bound}} AND \nsex == '{{sex_selection}}'\nLIMIT {{show_limit}}\n\nInteractive mode, please interact with below widget(s) to control the variable",
+    "crumbs": [
+      "Polars"
+    ]
+  },
+  {
+    "objectID": "core.html",
+    "href": "core.html",
+    "title": "core",
+    "section": "",
+    "text": "source\n\nfoo\n\n foo ()",
+    "crumbs": [
+      "core"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "jupytermastery",
+    "section": "",
+    "text": "This file will become your README and also the index of your documentation.",
+    "crumbs": [
+      "jupytermastery"
+    ]
+  },
+  {
+    "objectID": "index.html#install",
+    "href": "index.html#install",
+    "title": "jupytermastery",
+    "section": "Install",
+    "text": "Install\npip install jupytermastery",
+    "crumbs": [
+      "jupytermastery"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use",
+    "href": "index.html#how-to-use",
+    "title": "jupytermastery",
+    "section": "How to use",
+    "text": "How to use\nFill me in please! Don’t forget code examples:\n\n1+1\n\n2",
+    "crumbs": [
+      "jupytermastery"
+    ]
+  }
+]
